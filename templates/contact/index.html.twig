@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact index{% endblock %}
+
+{% block body %}
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-700">Contacts</h1>
+        <div class="flex gap-2">
+            <a href="#" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow">Groups</a>
+            <a href="{{ path('app_contact_new') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">+ Add contact</a>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+        <table class="min-w-full table-auto border-collapse border border-gray-200">
+            <thead class="bg-green-600 text-white">
+            <tr>
+                <th class="px-4 py-2 text-left">Name</th>
+                <th class="px-4 py-2 text-left">Phone</th>
+                <th class="px-4 py-2 text-left">Email</th>
+                <th class="px-4 py-2 text-left">Groups</th>
+                <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white">
+            {% for contact in contacts %}
+                <tr class="border-t border-gray-200 hover:bg-gray-50">
+                    <td class="px-4 py-2">
+                        <div class="flex items-center">
+                            {% if contact.picture %}
+                                <img
+                                        src="{{ asset('uploads/photos/' ~ contact.picture) }}"
+                                        alt="{{ contact.firstname }} {{ contact.lastname }}"
+                                        class="h-10 w-10 rounded-full object-cover ring-2 ring-green-100"
+                                >
+                            {% else %}
+                                <div
+                                        class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center ring-2 ring-green-200"
+                                >
+                                    <span class="text-sm font-medium text-green-700">
+                                        {{ contact.firstname|first|upper }}
+                                    </span>
+                                </div>
+                            {% endif %}
+                            <span class="ml-2">{{ contact.firstname }} {{ contact.lastname }}</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-2">{{ contact.number }}</td>
+                    <td class="px-4 py-2">{{ contact.mail }}</td>
+                    <td class="px-4 py-2">
+                        {% for group in contact.groups %}
+                            <span class="bg-blue-100 text-blue-600 text-sm px-2 py-1 rounded-full">{{ group.name }}</span>
+                        {% else %}
+                            <span class="text-gray-500 italic">No groups</span>
+                        {% endfor %}
+                    </td>
+                    <td class="px-4 py-2">
+                        <a href="{{ path('app_contact_edit', {'id': contact.id}) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow">Edit</a>
+                        <a href="{{ path('app_contact_delete', {'id': contact.id}) }}" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="px-4 py-2 text-center text-gray-500 italic">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
