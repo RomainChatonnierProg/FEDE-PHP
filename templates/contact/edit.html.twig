@@ -6,12 +6,10 @@
     <div class="bg-white shadow-md rounded-lg p-6 max-w-3xl mx-auto">
         <h1 class="text-2xl font-bold text-gray-700 mb-6">Edit Contact</h1>
 
-        <!-- Formulaire d'édition -->
         <div class="space-y-4">
             {{ include('contact/_form.html.twig', {'button_label': 'Update'}) }}
         </div>
 
-        <!-- Liens d'action -->
         <div class="mt-6 flex justify-between items-center">
             <a
                     href="{{ path('app_contact_index') }}"

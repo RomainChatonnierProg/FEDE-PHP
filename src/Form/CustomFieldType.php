@@ -18,10 +18,12 @@ class CustomFieldType extends AbstractType
             ->add('name', TextType::class,
                 [
                     'required' => true,
+                    'label' => 'Field Name'
                 ])
             ->add('value', TextType::class,
                 [
                     'required' => false,
+                    'label' => 'Field Value'
                 ])
         ;
     }

@@ -35,11 +35,7 @@ class ContactType extends AbstractType
                 'mapped' => false,
                 'attr' => ['accept' => 'image/*'],
             ])
-            ->add('pictureUrl', TextType::class, [
-                'label' => 'Image URL',
-                'required' => false,
-                'mapped' => false,
-            ])
+
             ->add('customFields', CollectionType::class, [
                 'entry_type' => CustomFieldType::class,
                 'entry_options' => ['label' => false],
