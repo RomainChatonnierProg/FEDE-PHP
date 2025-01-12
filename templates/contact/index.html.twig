@@ -1,14 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact index{% endblock %}
+{% block title %}ContactApp{% endblock %}
 
 {% block body %}
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-700">Contacts</h1>
         <div class="flex gap-2">
-            <a href="#{{ path("app_group_index") }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow">Groups</a>
+            <a href="{{ path('app_group_index') }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow">Groups</a>
             <a href="{{ path('app_contact_new') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">+ Add contact</a>
         </div>
+    </div>
+
+    <div class="mb-4">
+        <input
+                type="text"
+                id="search-contact"
+                placeholder="Search contacts..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        >
     </div>
 
     <div class="overflow-x-auto bg-white shadow rounded-lg">
@@ -22,10 +31,10 @@
                 <th class="px-4 py-2 text-left">Actions</th>
             </tr>
             </thead>
-            <tbody class="bg-white">
+            <tbody id="contact-list">
             {% for contact in contacts %}
-                <tr class="border-t border-gray-200 hover:bg-gray-50">
-                    <td class="px-4 py-2">
+                <tr class="contact-row border-t border-gray-200 hover:bg-gray-50">
+                    <td class="contact-name px-4 py-2">
                         <div class="flex items-center">
                             {% if contact.picture %}
                                 <img
@@ -45,9 +54,9 @@
                             <span class="ml-2">{{ contact.firstname }} {{ contact.lastname }}</span>
                         </div>
                     </td>
-                    <td class="px-4 py-2">{{ contact.number }}</td>
-                    <td class="px-4 py-2">{{ contact.mail }}</td>
-                    <td class="px-4 py-2">
+                    <td class="contact-number px-4 py-2">{{ contact.number }}</td>
+                    <td class="contact-email px-4 py-2">{{ contact.mail }}</td>
+                    <td class="contact-groups px-4 py-2">
                         {% for group in contact.groups %}
                             <span class="bg-blue-100 text-blue-600 text-sm px-2 py-1 rounded-full">{{ group.name }}</span>
                         {% else %}
@@ -67,4 +76,30 @@
             </tbody>
         </table>
     </div>
+    <script>
+        document.getElementById('search-contact').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#contact-list .contact-row');
+
+            rows.forEach(row => {
+                const name = row.querySelector('.contact-name')?.textContent.toLowerCase() || '';
+                const number = row.querySelector('.contact-number')?.textContent.toLowerCase() || '';
+                const email = row.querySelector('.contact-email')?.textContent.toLowerCase() || '';
+                const groups = row.querySelector('.contact-groups')?.textContent.toLowerCase() || '';
+
+                if (
+                    name.includes(searchTerm) ||
+                    number.includes(searchTerm) ||
+                    email.includes(searchTerm) ||
+                    groups.includes(searchTerm)
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
 {% endblock %}
+
+

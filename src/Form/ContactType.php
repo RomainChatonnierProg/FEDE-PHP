@@ -48,7 +48,7 @@ class ContactType extends AbstractType
                 'choice_label' => 'name',
                 'required' => false,
                 'multiple' => true,
-                'expanded' => false,
+                'expanded' => true,
             ]);
     }
 

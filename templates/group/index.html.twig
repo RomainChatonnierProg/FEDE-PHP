@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Group Index{% endblock %}
+{% block title %}ContactApp{% endblock %}
 
 {% block body %}
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-700">Groups</h1>
+        <a
+                href="{{ path('app_contact_index') }}"
+                class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow">
+            Contacts
+        </a>
         <a
                 href="{{ path('app_group_new') }}"
                 class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow"
@@ -17,7 +22,6 @@
         <table class="min-w-full table-auto border-collapse border border-gray-200">
             <thead class="bg-green-600 text-white">
             <tr>
-                <th class="px-4 py-2 text-left">ID</th>
                 <th class="px-4 py-2 text-left">Name</th>
                 <th class="px-4 py-2 text-left">Actions</th>
             </tr>
@@ -25,7 +29,6 @@
             <tbody class="bg-white">
             {% for group in groups %}
                 <tr class="border-t border-gray-200 hover:bg-gray-50">
-                    <td class="px-4 py-2">{{ group.id }}</td>
                     <td class="px-4 py-2">{{ group.name }}</td>
                     <td class="px-4 py-2">
                         <a
